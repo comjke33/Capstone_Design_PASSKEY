@@ -7,7 +7,7 @@ $ pip install google-generativeai
 import os
 import google.generativeai as genai
 
-genai.configure(api_key=os.environ["GEMINI_API_KEY"])
+genai.configure(api_key='AIzaSyA_MP43Ck_-iKJkwlw6rIi0OGRMAxBBQFg')
 
 # Create the model
 generation_config = {
@@ -30,6 +30,11 @@ chat_session = model.start_chat(
   ]
 )
 
-response = chat_session.send_message("INSERT_INPUT_HERE")
+original_text = '''
+
+'''
+
+question = ""
+response = chat_session.send_message(question)
 
 print(response.text)

@@ -1,0 +1,27 @@
+Question: What holiday is being discussed in the provided text excerpt?
+Answer: The holiday being discussed in the text excerpt is Labor Day.
+
+Question: Who are the characters speaking in this excerpt?
+Answer: The characters speaking in this excerpt are likely Marullus and a commoner, identified as "First Commoner".
+
+Question: What profession does the First Commoner claim to have?
+Answer: The First Commoner claims to be a carpenter.
+
+Question: What objects does Marullus ask the First Commoner about?
+Answer: Marullus asks the First Commoner about the whereabouts of his leather apron and rule.
+
+Question: How is the First Commoner dressed, according to Marullus?
+Answer: According to Marullus, the First Commoner is dressed in his best attire.
+
+Question: What does Marullus want to know about the First Commoner's profession in this excerpt?
+Answer: Marullus directly asks the First Commoner what his trade or profession is.
+
+Question: What objects are associated with the First Commoner's expected attire?
+Answer: The objects associated with the First Commoner's expected attire are a leather apron and a rule, likely a ruler used in carpentry.
+
+Question: Who speaks after the First Commoner?
+Answer: The Second Commoner speaks after the First Commoner.
+
+Question: What profession does the Second Commoner claim to be able to perform?
+Answer: The Second Commoner claims he can work as a cobbler, though it is unclear if this is his actual profession.
+
