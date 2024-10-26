@@ -6,7 +6,9 @@ class Player:
         self.id = id
         self.team = team # seeker OR survivor
         self.role = role # normal OR others
+
         self.position = [0,0,0] # z, x, y
+        self.velocity = 0
 
     # player의 위치 설정
     def set_position(self, x, y, z):
@@ -28,6 +30,11 @@ class Seeker(Player):
     # 거리 계산 수행 -> 삭제 가능성 높음
     def calculate_distance(self,):
         pass
+
+    # 속도 검사
+    def check_velocity(self,):
+        pass
+    
         
 # 생존자 클래스
 class Survivor(Player):
@@ -40,17 +47,22 @@ class Survivor(Player):
     def is_found(self):
         self.found_cnt = self.found_cnt + 1
         if self.found_cnt == 2 and self.role == "normal":
-            dead = True
+            self.dead = True
+            return "dead"
 
         elif self.found_cnt == 2 and self.role == "others": # 용병 캐릭터 시 실행
             pass 
-        
+
         else: # 부활 시 또는 found_cnt == 1일 때 감옥 처리
             self.in_prison == True
             pass
 
     # 탈출 수행
     def escape(self):
+        pass
+
+    # 속도 검사
+    def check_velocity(self,):
         pass
 
 # 게임 관리 클래스
@@ -68,7 +80,8 @@ class Game:
 
     # 턴 진행
     def play_turns(self):
-        turns = 0
+        turns = 0         
+            
         while not self.check_game_over():
             print(f"\n--- Turn {turns + 1} ---")
             for survivor in self.survivors:
