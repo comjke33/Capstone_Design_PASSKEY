@@ -1,3 +1,4 @@
+
 import random
 
 # Player 클래스
@@ -70,43 +71,80 @@ class Game:
     def __init__(self, game_setting):
         self.seeker = [Seeker(i+1, game_setting["seeker_role_list"][i]) for i in range(0, game_setting["seeker_num"])]
         self.survivors = [Survivor(i+1, game_setting["survivor_role_list"][i]) for i in range(0, game_setting["survivor_num"])]
-        
+        self.turns = game_setting['turn']
+        self.current_turn = 0
+        self.status
+        self.total_mission_cnt
+        self.complete_mission_cnt
+
     # 게임 시작
     def start_game(self):
         print("Game Started!")
         for survivor in self.survivors:
             survivor.is_captured = False  # 생존자 상태 초기화
-        self.play_turns()
+
+        for i in range(self.turns):
+            self.play_turn()
 
     # 턴 진행
-    def play_turns(self):
-        turns = 0         
-            
+    def play_turn(self):            
+        # 턴만큼 계속 진행
         while not self.check_game_over():
-            print(f"\n--- Turn {turns + 1} ---")
-            for survivor in self.survivors:
-                survivor.escape()
-            self.seeker.find_survivor(self.survivors)
-            turns += 1
+            # 현재 턴 출력
+            print(f"\n--- Turn {self.current_turn + 1} ---")
+            
+            # 게임 진행 
+            
+
+
+
+            # TODO
+            # 한 턴이 종료되었을 때 
+            if True:
+                self.current_turn += 1
+                break
 
     # 게임 오버 체크
     def check_game_over(self):
-        all_captured = all(survivor.is_captured for survivor in self.survivors)
+        # 술래 승리
+        # 모두가 잡혔을 때 
+        all_captured = all(survivor.status for survivor in self.survivors)
         if all_captured:
             print("All survivors are caught! Game Over.")
-            return True
+            return "Tagger Win"
+        
+        # 생존자 승리
+        # 생존자의 미션 진행도가 일정 이상일 때
+        if self.complete_mission_cnt == self.total_mission_cnt:
+            return "Survivor Win"
+        
+        # 아직 결론 나지 않음
         return False
 
 
-def __main__():
-    game_setting = {
-        "player_num" : 5,
-        "seeker_num" : 1,
-        "survivor_num" : 4,
-        "seeker_role_list" : ["normal" * game_setting["seeker_num"]],
-        "survivor_role_list" : ["normal" * game_setting["survivor_num"]]
-    }
+# ====================== 게임 시작 ======================
 
-    # 게임 실행
-    game = Game(game_setting)
-    game.start_game()
+setting_complete = False
+game_setting = {}
+
+while True:
+    # TODO
+    # 게임 세팅을 받는 부분
+    # 만약 게임 세팅 정보를 넘겨받았다면 -> 조건 수정
+    if True:
+        setting_complete = True
+        game_setting = {
+            "turn" : 1, 
+            "player_num" : 5,
+            "seeker_num" : 1,
+            "survivor_num" : 4,
+            "seeker_role_list" : ["normal" * game_setting["seeker_num"]],
+            "survivor_role_list" : ["normal" * game_setting["survivor_num"]]
+        }
+
+    # 게임 세팅이 완료되었다면 게임 시작
+    if setting_complete == True:     
+        # 게임 객체 선언
+        game = Game(game_setting)
+        # 게임 시작
+        game.start_game()
