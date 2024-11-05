@@ -1,113 +1,65 @@
-// script.js
+// 이전 위치 저장용 변수
+let previousPosition = null;
 
-let watchID;
-const speedThreshold = 0.5; // 0.5 m/s 이하의 속도는 0으로 간주
-const speedHistoryLimit = 5; // 평균 계산에 사용할 최대 속도 값 개수
-let speedHistory = []; // 최근 속도 값을 저장할 배열
+// 속도 측정 주기 (2초)
+const CHECK_INTERVAL = 2000;
 
-// Player 클래스 정의
-class Player {
-    constructor(role) {
-        this.role = role;
-    }
+// 속도 측정 함수
+function startMeasurement() {
+    const speedDisplay = document.getElementById("speed-display");
+    const positionDisplay = document.getElementById("position-display");
+    const audio = document.getElementById("sound");
 
-    // 속도가 24m/s 이상일 때 경고
-    checkSpeed(speed) {
-        if (speed >= 24) {
-            this.alertHighSpeed("속도가 너무 빠릅니다! 경고음과 진동 발생.");
-        }
-    }
+    // 위치가 변할 때마다 위치와 속도를 측정
+    navigator.geolocation.watchPosition(
+        (position) => {
+            const { latitude, longitude } = position.coords;
+            const currentPosition = { latitude, longitude };
 
-    // 경고 발생 시 진동 및 경고음
-    alertHighSpeed(message) {
-        document.getElementById("speed").innerHTML = message;
-        navigator.vibrate(2000); // 2초 진동
+            // 위치 정보 업데이트
+            positionDisplay.innerText = `위치: 위도 ${latitude}, 경도 ${longitude}`;
 
-        // 경고음 재생
-        const audio = new Audio('assets/audio/beep-07.wav');
+            // 이전 위치가 있다면 속도 계산
+            if (previousPosition) {
+                const distance = calculateDistance(previousPosition, currentPosition);
+                const speed = (distance / (CHECK_INTERVAL / 1000)).toFixed(2);
 
-        audio.play();
-    }
+                // 5미터 이상 이동 시 속도 업데이트
+                if (distance >= 5) {
+                    speedDisplay.innerText = `속도: ${speed} m/s`;
+
+                    // 소리와 진동 출력
+                    audio.play();
+                    navigator.vibrate(200);
+                }
+            }
+
+            // 현재 위치를 이전 위치로 업데이트
+            previousPosition = currentPosition;
+        },
+        (error) => {
+            console.error("위치 접근 오류:", error);
+            alert("위치 접근 권한을 허용해 주세요.");
+        },
+        { enableHighAccuracy: true, maximumAge: CHECK_INTERVAL, timeout: 5000 }
+    );
 }
 
-// Player 인스턴스 생성 (임의 역할 설정)
-const player = new Player("술레");
+// 두 위치 간 거리 계산 함수 (단위: 미터)
+function calculateDistance(pos1, pos2) {
+    const R = 6371e3; // 지구 반지름 (단위: 미터)
+    const lat1 = (pos1.latitude * Math.PI) / 180;
+    const lat2 = (pos2.latitude * Math.PI) / 180;
+    const deltaLat = ((pos2.latitude - pos1.latitude) * Math.PI) / 180;
+    const deltaLon = ((pos2.longitude - pos1.longitude) * Math.PI) / 180;
 
-// 시작/중지 버튼 토글 기능
-function toggleTracking() {
-    if (watchID) {
-        stopTracking();
-    } else {
-        startTracking();
-    }
+    const a =
+        Math.sin(deltaLat / 2) * Math.sin(deltaLat / 2) +
+        Math.cos(lat1) * Math.cos(lat2) *
+        Math.sin(deltaLon / 2) * Math.sin(deltaLon / 2);
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+
+    return R * c;
 }
 
-function startTracking() {
-    if (navigator.geolocation) {
-        watchID = navigator.geolocation.watchPosition(calculateSpeed, showError, {
-            enableHighAccuracy: true,
-            maximumAge: 3000, // 캐시된 위치 정보 허용 시간 (3초)
-            timeout: 5000     // 최대 위치 업데이트 대기 시간 (5초)
-        });
-        document.getElementById("trackingButton").textContent = "측정 중지"; // 버튼 텍스트 변경
-    } else {
-        document.getElementById("speed").innerHTML = "이 브라우저에서는 위치 정보를 지원하지 않습니다.";
-    }
-}
 
-function stopTracking() {
-    if (watchID) {
-        navigator.geolocation.clearWatch(watchID);
-        watchID = null;
-        document.getElementById("trackingButton").textContent = "속도 측정 시작"; // 버튼 텍스트 변경
-        document.getElementById("speed").innerHTML = "측정 중지됨";
-        document.getElementById("currentSpeed").innerHTML = "현재 속도: 0 m/s";
-        speedHistory = []; // 속도 기록 초기화
-    }
-}
-
-function calculateSpeed(position) {
-    let speed = position.coords.speed;
-
-    if (speed !== null) {
-        // 속도가 임계값 이하일 경우 0으로 설정
-        if (speed < speedThreshold) {
-            speed = 0;
-        }
-
-        // 속도 값 기록을 배열에 추가
-        speedHistory.push(speed);
-
-        // 최대 저장 개수 초과 시 가장 오래된 값 제거
-        if (speedHistory.length > speedHistoryLimit) {
-            speedHistory.shift();
-        }
-
-        // 최근 속도 값의 평균 계산
-        const averageSpeed = speedHistory.reduce((acc, s) => acc + s, 0) / speedHistory.length;
-
-        document.getElementById("currentSpeed").innerHTML = "현재 속도: " + averageSpeed.toFixed(2) + " m/s";
-
-        // 속도 경고 조건 확인
-        player.checkSpeed(averageSpeed);
-    } else {
-        document.getElementById("currentSpeed").innerHTML = "현재 속도: 측정 불가";
-    }
-}
-
-function showError(error) {
-    switch(error.code) {
-        case error.PERMISSION_DENIED:
-            document.getElementById("speed").innerHTML = "위치 정보 사용을 거부했습니다.";
-            break;
-        case error.POSITION_UNAVAILABLE:
-            document.getElementById("speed").innerHTML = "위치 정보를 사용할 수 없습니다.";
-            break;
-        case error.TIMEOUT:
-            document.getElementById("speed").innerHTML = "요청 시간이 초과되었습니다.";
-            break;
-        case error.UNKNOWN_ERROR:
-            document.getElementById("speed").innerHTML = "알 수 없는 오류가 발생했습니다.";
-            break;
-    }
-}
