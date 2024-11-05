@@ -10,6 +10,7 @@ WARNING_VELOCITY_SURVIVOR = 1.7
 MAX_VELOCITY_SURVIVOR = 2.4
 
 import random
+import pymysql
 from collections import Counter
 
 # Player 클래스
@@ -110,7 +111,9 @@ class Mission:
 
 # 게임 관리 클래스
 class Game:
-    def __init__(self, game_setting):
+    def __init__(self, game_setting, conn):
+        self.conn = conn
+
         self.turns = game_setting['turn']
         self.current_turn = 0
         self.result = None
@@ -123,6 +126,7 @@ class Game:
         self.survivors = [Survivor(i, "normal") for i in range(0, game_setting["survivor_num"])]
 
     # TODO
+    # ESP32 UDP 통신
     # 센서값으로 멤버 변수 업데이트
     def update_sensor_state(self):
         pass
@@ -130,6 +134,14 @@ class Game:
     # TODO
     # MYSQL 업데이트
     def update2DB(self):
+        query = "SELECT * FROM survivor"
+
+        cursor = self.conn.cursor()
+        cursor.execute(query)
+        rows = cursor.fetchall()
+        print(rows)
+
+        conn.close()
         pass
 
     # 미션 상태 업데이트
@@ -251,6 +263,14 @@ class Game:
 
 # ====================== 게임 시작 ======================
 
+# mysql 연결 시도
+conn = pymysql.connect(
+    host='localhost',   # MySQL 서버 주소
+    user='your_username',   # 사용자 이름
+    password='your_password',   # 비밀번호
+    database='your_database'   # 데이터베이스 이름
+)
+
 setting_complete = False
 game_setting = {}
 
@@ -271,6 +291,6 @@ while True:
     # 게임 세팅이 완료되었다면 게임 시작
     if setting_complete == True:     
         # 게임 객체 선언
-        game = Game(game_setting)
+        game = Game(game_setting, conn)
         # 게임 시작
         game.start_game()
