@@ -265,10 +265,10 @@ class Game:
 
 # mysql 연결 시도
 conn = pymysql.connect(
-    host='localhost',   # MySQL 서버 주소
-    user='your_username',   # 사용자 이름
-    password='your_password',   # 비밀번호
-    database='your_database'   # 데이터베이스 이름
+    host='192.168.0.16',   # MySQL 서버 주소
+    user='root',   # 사용자 이름
+    password='passkey0012',   # 비밀번호
+    database='flask_db'   # 데이터베이스 이름
 )
 
 setting_complete = False
