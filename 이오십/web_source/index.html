@@ -2,19 +2,26 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <title>속도 측정 예제</title>
+    <title>바보바보바보측정 예제</title>
     <!-- 외부 CSS 파일 링크 -->
-    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="/이오십/web_source/style.css">
 </head>
 <body>
-    <h1>현재 속도 측정</h1>
-    <button onclick="toggleTracking()" id="trackingButton">속도 측정 시작</button>
-    
-    <p id="speed">속도가 표시됩니다...</p>
-    <p id="currentSpeed">현재 속도: 0 m/s</p>
 
-    <!-- 외부 JS 파일 링크 -->
-    <script src="js/script.js"></script>
+    <!-- 위치 출력 영역 -->
+    <div id="location-display">현재 위치를 확인하려면 버튼을 누르세요.</div>
+
+    <!-- 오디오 파일 설정 -->
+    <audio id="sound" src="/이오십/web_source/assets/audio/beep-07.wav"></audio>
+
+    <!-- 버튼 생성 -->
+    <button onclick="displayLocation()">현재 위치 출력 및 소리, 진동</button>
+
+    <!-- JavaScript 코드 -->
+    <script src="script.js"></script>
+
+
+    <script src="/이오십/web_source/script.js"></script>
 </body>
 </html>
 
