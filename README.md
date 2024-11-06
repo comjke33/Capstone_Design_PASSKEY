@@ -1,41 +1,23 @@
 ### 팀 소개
-
 **팀장**
 - 이름: 장경은
 - 나이: 22 (2003)
-- 전화번호: 
-- 포트폴리오
-    - **LLM(GPT, Llama, sLLM)**
-    - Linux - Web 연계(PHP + Nginx)
-    - 크로스 플랫폼 앱 개발 경험(Flutter)
-    - 프론트엔드 (Http, CSS, JavaScript) 기초 경험
-    - Node.js + 서버 통신
-    - MySQL DB
-    - Firebase + 앱인벤터 연동
-    - Arduino
-    - Raspberry Pi + Linux
+- 이메일: comjke33@inu.ac.kr
 
 **팀원**
 - 이름: 김동현
 - 나이: 25 (2000)
-- 전화번호: 
-- 포트폴리오
-    - **프론트 엔드**
-    - 특히 **웹 사이트** 관심
+- 이메일: dongsky1104@gmail.com
 
 **팀원**
 - 이름: 손승민
 - 나이: 24 (2001)
-- 전화번호:
-- 포트폴리오
-    - **프론트엔드**
-    - sLLM 이용 경험
+- 이메일: sonsmmm@gmail.com
 
 **팀원**
 - 이름: 최연호
 - 나이: 26 (1999)
-- 전화번호: 
-- 포트폴리오
-    - **서버(백엔드)**
-    - 데이터베이스
-    - 클라우드
+- 이메일: zxccyh@inu.ac.kr
+
+### 노션 페이지
+https://comjke33.notion.site/2-f4a15a269a324cbc9586a351b44fbf27?pvs=4
