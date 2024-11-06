@@ -12,10 +12,9 @@
         margin-bottom: 20px;
     }
 
-    /* 기본 버튼 스타일 */
-    #trackingButton {
-        padding: 100px 200px;
-        font-size: 60px;
+    #playButton {
+        padding: 50px 50px;
+        font-size: 10px;
         cursor: pointer;
         background-color: #007BFF;
         color: white;
@@ -26,16 +25,13 @@
         height: 40px; /* 기본 높이 */
     }
 
-    /* 마우스 포인터가 올라갔을 때 크기 변경 */
-    #trackingButton:hover {
-        background-color: red; /* 색상 변경 */
-        width: 500px; /* 너비를 늘림 */
-        height: 500px; /* 높이를 늘림 */
+    #playButton:hover {
+        background-color: red;
+        width: 10px;
+        height: 10px;
     }
 
-
-
     p {
-        font-size: 18px;
+        font-size: 15px;
         margin-top: 20px;
     }
