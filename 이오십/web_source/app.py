@@ -1,5 +1,7 @@
 from flask import Flask, render_template, request
 
+#pull 절대 주의  다 날라감!!!!!!!!!!!!!!!#
+
 #관리자IP 나(손승민) 
 
 app = Flask(__name__)
@@ -10,7 +12,7 @@ def home():
     if client_ip == "192.168.0.6":
         return render_template('admin.html')  # 지정된 IP에서 접근 시 관리자 페이지
     else:
-        return render_template('guest.html')  # 다른 IP에서 접근 시 게스트 페이지
+        return render_template('index.html')  # 다른 IP에서 접근 시 게스트 페이지
 
 if __name__ == "__main__":
     # 모든 네트워크 인터페이스에서 접근 가능하게 설정 (host="0.0.0.0")
