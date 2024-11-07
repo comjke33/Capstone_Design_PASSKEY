@@ -4,16 +4,19 @@ from flask import Flask, render_template, request
 app = Flask(__name__)
 
 @app.route('/')
-def index():
-    return render_template('index.html')  # 'templates/index.html' 파일을 렌더링합니다.
+# def index():
+#     return render_template('index.html')  # 'templates/index.html' 파일을 렌더링합니다.
 
 def home():
     client_ip = request.remote_addr  # 요청한 클라이언트의 IP 주소 확인
     if client_ip == "192.168.0.4":
-        return render_template('index.html')  # 손승민 관리자 페이지
+        return render_template('index.html')  # 김동현 관리자 페이지
         
-    # elif client_ip == "192.168.0.4":
-    #     return render_template('admin.html')  # 김동현 관리자 페이지
+    elif client_ip == "192.168.0.3":
+        return render_template('seeker.html')   #술래 페이지
+    
+    elif client_ip == "192.168.0.8":
+        return render_template("survivor1.html")    #생존자1 페이지
 
     else:
         return render_template('index.html')  # 다른 IP에서 접근 시 게스트 페이지
