@@ -15,8 +15,8 @@ def home():
         
     elif client_ip == "192.168.0.3":
         target_page = url_for('seeker')     #술래 단말기의 경우 seeker페이지 할당        
-    elif client_ip == "192.168.0.8":
-        target_page = url_for('survivor1')      # 또 다른 사용자에게 survivor1 페이지 할당  
+    # elif client_ip == "192.168.0.8":
+    #     target_page = url_for('survivor1')      # 또 다른 사용자에게 survivor1 페이지 할당  
     else:
         return render_template('index.html')        # 기본값으로 index.html 렌더링
     
