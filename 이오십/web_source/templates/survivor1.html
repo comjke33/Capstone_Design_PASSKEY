@@ -9,16 +9,16 @@
 </head>
 <body>
     생존자1
-        <!-- 위치 출력 영역 -->
-        <div id="location-display">속도를 측정할 것입니다.</div>
+        <!-- 위치 출력 영역
+        <div id="location-display">속도를 측정할 것입니다.</div> -->
+
+        <!-- 버튼 생성 -->
+        <button id="playButton"><p>버튼을 눌러주세요</p></button>
 
         <!-- 오디오 파일 설정 -->
         <audio id="sound" src="{{ url_for('static', filename='sunset-beach-259654.mp3') }}" type="audio/wav" preload="auto"></audio>
-    
-        <!-- 버튼 생성 -->
-        <button id="playButton"><p>버튼을 눌러주세요</p></button>
-    
+        
         <!-- JavaScript 코드 -->
-        <script src="{{ url_for('static', filename='script.js') }}"></script>
+        <script src="{{ url_for('static', filename='survivor-playing.js') }}"></script>
 </body>
 </html>

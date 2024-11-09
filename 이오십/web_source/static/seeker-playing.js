@@ -1,4 +1,5 @@
-document.getElementById("playButton").addEventListener("click", function() {
+document.getElementById("playButton").addEventListener("click", function() 
+{
     //startTracking();  //위치 추적 시작(속도 계산 포함)
     playSound();        // 소리 재생
     triggerVibration(); // 진동 시작(10초동안)
@@ -30,3 +31,4 @@ function triggerVibration() {
         innerText.log("이 기기는 진동 기능을 지원하지 않습니다.");
     }
 }
+
