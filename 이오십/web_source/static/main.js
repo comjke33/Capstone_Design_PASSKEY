@@ -7,7 +7,7 @@ const timer = setInterval(() => {
         timeElement.textContent = `${countdown}초 뒤에 게임을 시작합니다.`;
         countdown--;
     } else {
-        timeElement.textContent = "1초 뒤에 게임을 시작합니다.";
+        timeElement.textContent = "게임을 시작합니다.";
         clearInterval(timer);
         setTimeout(() => {
             window.location.href = targetPage; // 카운트다운 후 target_page로 리디렉션

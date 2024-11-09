@@ -16,7 +16,11 @@ def home():
     elif client_ip == "192.168.0.3":
         target_page = url_for('seeker')     #술래 단말기의 경우 seeker페이지 할당        
     elif client_ip == "192.168.0.8":
-        target_page = url_for('survivor1')      # 또 다른 사용자에게 survivor1 페이지 할당  
+        target_page = url_for('survivor')      # 생존자1에게 survivor-playing 페이지 할당  
+    elif client_ip == "":                       
+        target_page = url_for('survivor')      # 생존자2에게 survivor-playing 페이지 할당(아이피 주소 미정)
+    elif client_ip == "":
+        target_page = url_for('survivor')      # 생존자3에게 survivor-playing 페이지 할당(아이피 주소 미정)
     else:
         return render_template('index.html')        # 기본값으로 index.html 렌더링
     
@@ -28,9 +32,9 @@ def home():
 def seeker():
     return render_template('seeker.html')   # seeker 페이지 라우트: 'templates/seeker.html' 파일 렌더링
 
-@app.route('/survivor1')
+@app.route('/survivor')
 def survivor1():
-    return render_template('survivor1.html')    # survivor1 페이지 라우트: 'templates/survivor1.html' 파일 렌더링
+    return render_template('survivor-playing.html')    # survivor1 페이지 라우트: 'templates/survivor1.html' 파일 렌더링
 
 
 # 메인 프로그램 실행 시 HTTPS 서버 시작
