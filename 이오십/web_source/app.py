@@ -1,6 +1,11 @@
 import os
 from flask import Flask, render_template, request, url_for
 
+
+#occupation=점령
+#mission=생존자 미션
+
+
 app = Flask(__name__)   #flask app생성
 
 @app.route('/')         #기본경로 '/'에 대한 라우팅 설정 
@@ -17,12 +22,14 @@ def home():
         target_page = url_for('seeker')     #술래 단말기의 경우 seeker페이지 할당        
     elif client_ip == "192.168.0.8":
         target_page = url_for('survivor')      # 생존자1에게 survivor-playing 페이지 할당  
-    elif client_ip == "":                       
-        target_page = url_for('survivor')      # 생존자2에게 survivor-playing 페이지 할당(아이피 주소 미정)
-    elif client_ip == "":
-        target_page = url_for('survivor')      # 생존자3에게 survivor-playing 페이지 할당(아이피 주소 미정)
+    # elif client_ip == "":                       
+    #     target_page = url_for('survivor')      # 생존자2에게 survivor-playing 페이지 할당(아이피 주소 미정)
+    # elif client_ip == "":
+    #     target_page = url_for('survivor')      # 생존자3에게 survivor-playing 페이지 할당(아이피 주소 미정)
     else:
-        return render_template('index.html')        # 기본값으로 index.html 렌더링
+        return render_template('survivor-occupation.html')        # 내 핸드폰으로 접속하면 occupation으로 접속됨.
+    # else:
+    #     target_page = url_for('survivor-occupation')
     
 
     return render_template('main.html', target_page=target_page)    # main.html 템플릿으로 렌더링하며 target_page 변수 전달
@@ -33,9 +40,22 @@ def seeker():
     return render_template('seeker.html')   # seeker 페이지 라우트: 'templates/seeker.html' 파일 렌더링
 
 @app.route('/survivor')
-def survivor1():
-    return render_template('survivor-playing.html')    # survivor1 페이지 라우트: 'templates/survivor1.html' 파일 렌더링
+def survivor():
+    return render_template('survivor-playing.html')    # survivor 페이지 라우트: 'templates/survivor1.html' 파일 렌더링
 
+# @app.route('/survivor-occupation')
+# def occupation():
+#     return render_template('survivor-mission.html')    # survivor 미션 페이지 라우트: 'templates/survivor-mission.html' 파일 렌더링
+
+# '생존자 점령' 페이지 렌더링
+@app.route('/occupation')
+def occupation():
+    return render_template('survivor-occupation.html')
+
+# 리디렉션 후 '생존자 미션' 페이지 렌더링
+@app.route('/mission')
+def mission():
+    return render_template('survivor-mission.html')
 
 # 메인 프로그램 실행 시 HTTPS 서버 시작
 if __name__ == "__main__":
