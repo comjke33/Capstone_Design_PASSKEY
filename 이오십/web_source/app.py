@@ -43,9 +43,7 @@ def seeker():
 def survivor():
     return render_template('survivor-playing.html')    # survivor 페이지 라우트: 'templates/survivor1.html' 파일 렌더링
 
-# @app.route('/survivor-occupation')
-# def occupation():
-#     return render_template('survivor-mission.html')    # survivor 미션 페이지 라우트: 'templates/survivor-mission.html' 파일 렌더링
+# 사용자들의 페이지 렌더링 처리해주는 곳
 
 # '생존자 점령' 페이지 렌더링
 # 사용자가 '/occupation' URL에 접근하면 'survivor-occupation.html' 템플릿을 렌더링하여 반환
