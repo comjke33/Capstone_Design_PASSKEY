@@ -25,4 +25,4 @@
 
 ### 노션 페이지
 **사이트 주소**
-https://comjke33.notion.site/2-f4a15a269a324cbc9586a351b44fbf27?pvs=4
+https://comjke33.notion.site/2-f4a15a269a324cbc9586a351b44fbf27?pvs=4 
