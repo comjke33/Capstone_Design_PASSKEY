@@ -48,14 +48,22 @@ def survivor():
 #     return render_template('survivor-mission.html')    # survivor 미션 페이지 라우트: 'templates/survivor-mission.html' 파일 렌더링
 
 # '생존자 점령' 페이지 렌더링
+# 사용자가 '/occupation' URL에 접근하면 'survivor-occupation.html' 템플릿을 렌더링하여 반환
 @app.route('/occupation')
 def occupation():
     return render_template('survivor-occupation.html')
 
-# 리디렉션 후 '생존자 미션' 페이지 렌더링
+# '생존자 미션' 페이지 렌더링
+# 사용자가 '/mission' URL에 접근하면 'survivor-mission.html' 템플릿을 렌더링하여 반환
 @app.route('/mission')
 def mission():
     return render_template('survivor-mission.html')
+
+# '플레이 페이지' 렌더링
+# 사용자가 '/playing' URL에 접근하면 'survivor-playing.html' 템플릿을 렌더링하여 반환
+@app.route('/playing')
+def playing():
+    return render_template('survivor-playing.html')
 
 # 메인 프로그램 실행 시 HTTPS 서버 시작
 if __name__ == "__main__":
