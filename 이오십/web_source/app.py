@@ -5,7 +5,7 @@ from flask import Flask, render_template, request, url_for
 #occupation=점령
 #mission=생존자 미션
 
-
+#플라스크
 app = Flask(__name__)   #flask app생성
 
 @app.route('/')         #기본경로 '/'에 대한 라우팅 설정 
