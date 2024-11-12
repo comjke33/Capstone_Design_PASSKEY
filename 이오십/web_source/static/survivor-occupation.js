@@ -44,3 +44,4 @@ function checkAndRedirect() {
 
 // 버튼 클릭 시 타이머 시작
 document.getElementById('timeButton').addEventListener('click', startTimer);
+

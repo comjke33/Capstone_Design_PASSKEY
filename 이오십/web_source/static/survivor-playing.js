@@ -32,7 +32,28 @@ function triggerVibration() {
     }
 }
 
+const button = document.getElementById('survivor-occupation');
 
+// 버튼 클릭 시 리디렉션하는 이벤트 리스너 추가
+button.addEventListener('click', () => {
+    window.location.href = '/occupation'; // 리디렉션할 경로 설정
+});
+
+//폴링방식을 통해서 리디렉션하는 gpt 코드 테스트 해봐야함.
+
+// 폴링: 일정 주기로 서버에 상태 확인 요청
+setInterval(async () => {
+    try {
+        const response = await fetch('/check_status');
+        const data = await response.json();
+        if (data.should_redirect) {
+            // 리다이렉트 조건이 맞으면 특정 페이지로 이동
+            window.location.href = '/occupation';
+        }
+    } catch (error) {
+        console.error('Error fetching status:', error);
+    }
+}, 1000);  // 1초 간격으로 서버 상태 확인
 
 
 

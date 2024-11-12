@@ -1,12 +1,27 @@
 import os
-from flask import Flask, render_template, request, url_for
-
+from flask import Flask, render_template, request, url_for, jsonify
+import threading
+import time
 
 #occupation=점령
 #mission=생존자 미션
 
 #플라스크
 app = Flask(__name__)   #flask app생성
+
+some_variable = False #초기 상태는 false로 지정
+
+# 상태를 30초마다 토글하는 함수 정의(30초마다 상태를 변수의 상태를 변화시켜줌)
+def toggle_some_variable():
+    global some_variable
+    while True:
+        some_variable = not some_variable  # 상태를 반전시킴
+        time.sleep(10)  # 30초 대기
+
+# 별도의 스레드로 상태 토글 함수 실행
+toggle_thread = threading.Thread(target=toggle_some_variable)
+toggle_thread.daemon = True  # Flask 앱 종료 시 스레드도 자동 종료
+toggle_thread.start()
 
 @app.route('/')         #기본경로 '/'에 대한 라우팅 설정 
 
@@ -27,7 +42,7 @@ def home():
     # elif client_ip == "":
     #     target_page = url_for('survivor')      # 생존자3에게 survivor-playing 페이지 할당(아이피 주소 미정)
     else:
-        return render_template('survivor-occupation.html')        # 내 핸드폰으로 접속하면 occupation으로 접속됨.
+        return render_template('survivor-playing.html')        # 내 핸드폰으로 접속하면 occupation으로 접속됨.
     # else:
     #     target_page = url_for('survivor-occupation')
     
@@ -63,6 +78,15 @@ def mission():
 def playing():
     return render_template('survivor-playing.html')
 
+@app.route('/check_status')
+def check_status():
+    # 서버에서 확인할 조건을 설정
+    # 예를 들어, 특정 변수가 True일 때 클라이언트에 리다이렉트 신호를 보냄
+    some_variable = True  # 실제 조건에 따라 변경
+    return jsonify({'should_redirect': some_variable})
+
+
+
 # 메인 프로그램 실행 시 HTTPS 서버 시작
 if __name__ == "__main__":
     ## 현재 파일의 절대 경로 기준으로 static 폴더 내 인증서 파일 위치 설정
@@ -72,3 +96,5 @@ if __name__ == "__main__":
     
     ssl_context = (cert_path, key_path)                         # SSL 인증서를 사용하여 HTTPS 서버 실행 (포트 443)
     app.run(host="0.0.0.0", port=443, ssl_context=ssl_context, debug=True)
+
+
