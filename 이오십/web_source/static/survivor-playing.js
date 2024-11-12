@@ -44,7 +44,7 @@ button.addEventListener('click', () => {
 // 폴링: 일정 주기로 서버에 상태 확인 요청
 setInterval(async () => {
     try {
-        const response = await fetch('/check_status');
+        const response = await fetch('/check-playing-status');
         const data = await response.json();
         if (data.should_redirect) {
             // 리다이렉트 조건이 맞으면 특정 페이지로 이동

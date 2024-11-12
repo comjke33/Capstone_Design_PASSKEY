@@ -78,11 +78,16 @@ def mission():
 def playing():
     return render_template('survivor-playing.html')
 
-@app.route('/check_status')
-def check_status():
+@app.route('/check-playing-status')
+def check_playing_status():
     # 서버에서 확인할 조건을 설정
     # 예를 들어, 특정 변수가 True일 때 클라이언트에 리다이렉트 신호를 보냄
     some_variable = True  # 실제 조건에 따라 변경
+    return jsonify({'should_redirect': some_variable})
+
+@app.route('/check-mission-status')
+def check_mission_status():
+    some_variable = True
     return jsonify({'should_redirect': some_variable})
 
 
