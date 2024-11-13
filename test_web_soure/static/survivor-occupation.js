@@ -4,9 +4,14 @@
 
 //서버로부터 데이터를 받았을 때에 survivor-mission.html로 리디렉션 시켜주는 코드
 
-// let redirectCount = 0; // 리디렉션 횟수 제한 (최대 2번)
-let redirectCount = sessionStorage.getItem('redirectCount') ? parseInt(localStorage.getItem('redirectCount')) : 0;
-let timeLeft = sessionStorage.getItem('timeLeft') ? parseInt(localStorage.getItem('timeLeft')) : 60;  
+// // let redirectCount = 0; // 리디렉션 횟수 제한 (최대 2번)
+// let redirectCount = sessionStorage.getItem('redirectCount') ? parseInt(localStorage.getItem('redirectCount')) : 0;
+// let timeLeft = sessionStorage.getItem('timeLeft') ? parseInt(localStorage.getItem('timeLeft')) : 60;
+
+// 리디렉션 횟수와 타이머 남은 시간
+let redirectCount = sessionStorage.getItem('redirectCount') ? parseInt(sessionStorage.getItem('redirectCount')) : 0;
+let timeLeft = sessionStorage.getItem('timeLeft') ? parseInt(sessionStorage.getItem('timeLeft')) : 60;
+
 // 타이머 설정 함수
 function startTimer() {
     // let timeLeft = 60; // 카운트다운 시간 (초)
@@ -43,8 +48,13 @@ function checkAndRedirect() {
     }
 }
 
-// 페이지 로드 시 타이머가 남아 있는 경우 자동으로 시작
+// 페이지 로드 시 플래그 확인 및 초기화
 window.addEventListener('load', () => {
+    // 리다이렉션 후 돌아왔는지 확인
+    if (localStorage.getItem('redirected') === 'true') {
+        localStorage.removeItem('redirected'); // 플래그 제거
+        // 필요한 경우 추가 초기화 작업 수행
+    }
     if (timeLeft > 0) {
         startTimer();
     }

@@ -11,33 +11,8 @@ app = Flask(__name__)   #flask app생성
 
 # PTO = Playing to Occupation(플레잉->점령페이지), 초기 상태는 false로 저장
 PTO = False 
-
-# 상태를 10초마다 토글하는 함수 정의(30초마다 상태를 변수의 상태를 변화시켜줌)
-def toggle_PTO():
-    global PTO
-    while True:
-        PTO = not PTO  # 상태를 반전시킴
-        time.sleep(10)  # 10초 대기
-
-# 별도의 스레드로 상태 토글 함수 실행
-toggle_thread = threading.Thread(target=toggle_PTO)
-toggle_thread.daemon = True  # Flask 앱 종료 시 스레드도 자동 종료
-toggle_thread.start()
-
 #OTP = Occupation To Playing(점령 페이지 -> 플레잉 페이지), 초기 상태는 false로 저장
 OTP = False
-
-# 상태를 10초마다 토글하는 함수(30초마다의 변수 상태를 변화시켜줌)
-def toggle_OTP():
-    global OTP
-    while True:
-        OTP = not OTP   # 상태를 반전시킴
-        time.sleep(10)  # 10초 대기
-
-#별도의 스레드로 상태 토글 함수 실행
-toggle_thread = threading.Thread(target=toggle_OTP)
-toggle_thread.daemon = True # Flask 앱 종료시 스레드도 자동 종료 
-toggle_thread.start()
 
 @app.route('/')         #기본경로 '/'에 대한 라우팅 설정 
 
@@ -47,16 +22,15 @@ toggle_thread.start()
 def home():
     client_ip = request.remote_addr  # 요청한 클라이언트의 IP주소 확인
     if client_ip == "192.168.0.4":
-        return render_template('index.html')  #관리자(나)인 경우 index.html로 렌더링
-        
+        return render_template('index.html')  #관리자(나)인 경우 index.html로 렌더링        
     elif client_ip == "192.168.0.3":
         target_page = url_for('seeker')     #술래 단말기의 경우 seeker페이지 할당        
     elif client_ip == "192.168.0.8":
         target_page = url_for('survivor')      # 생존자1에게 survivor-playing 페이지 할당  
-    # elif client_ip == "":                       
-    #     target_page = url_for('survivor')      # 생존자2에게 survivor-playing 페이지 할당(아이피 주소 미정)
-    # elif client_ip == "":
-    #     target_page = url_for('survivor')      # 생존자3에게 survivor-playing 페이지 할당(아이피 주소 미정)
+    elif client_ip == "192.168.0.9":                       
+        target_page = url_for('survivor')      # 생존자2에게 survivor-playing 페이지 할당(아이피 주소 미정)
+    elif client_ip == "192.168.0.10":
+        target_page = url_for('survivor')      # 생존자3에게 survivor-playing 페이지 할당(아이피 주소 미정)
     else:
         return render_template('survivor-playing.html')        # 내 핸드폰으로 접속하면 occupation으로 접속됨.
     # else:
@@ -94,19 +68,27 @@ def mission():
 def playing():
     return render_template('survivor-playing.html')
 
-# #
-@app.route('/check-playing-status')
+# 
+@app.route('/check-playing-status', methods=['POST'])
 def check_playing_status():
     # 서버에서 확인할 조건을 설정
     # 예를 들어, 특정 변수가 True일 때 클라이언트에 리다이렉트 신호를 보냄
-    PTO = True  # 실제 조건에 따라 변경.(조건은 추후 수정해야 할 사항)
+    # PTO = True  # 실제 조건에 따라 변경.(조건은 추후 수정해야 할 사항)
+    global PTO
+    data = request.get_json()
+    if 'staus' in data:
+        PTO = data['status']
     return jsonify({'should_redirect': PTO})
 #
-@app.route('/check-mission-status')
+@app.route('/check-mission-status', methods=['POST'])
 def check_mission_status():
     #서버에서 확인할 조건을 설정
     # 예를 들어, 특정 변수가 True일 때 클라이언트에 리다이렉트 신호를 보냄
-    OTP = True    # 실제 조건에 따라서 변경.(조건은 추후 수정해야 할 사항)
+    # OTP = True    # 실제 조건에 따라서 변경.(조건은 추후 수정해야 할 사항)
+    global OTP
+    data = request.get_json()
+    if 'status' in data:
+        OTP = data['status']
     return jsonify({'should_redirect': OTP})
 
 # 메인 프로그램 실행 시 HTTPS 서버 시작
@@ -118,5 +100,3 @@ if __name__ == "__main__":
     
     ssl_context = (cert_path, key_path)                         # SSL 인증서를 사용하여 HTTPS 서버 실행 (포트 443)
     app.run(host="0.0.0.0", port=443, ssl_context=ssl_context, debug=True)
-
-
